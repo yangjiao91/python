@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 doc = """\
-onekey_release.py [-p warfilepath] [-t tomcathome] [-w webhome] [-f replaceScript]
+onekey_release.py [-p warFilePath] [-t tomcatHome] [-w webHome] [-f replaceScript]
 Options:
     -p --
     -t --
@@ -60,31 +60,31 @@ class OnekeyRelease:
              print '\033[41m the form of version is incorrect \033[0m'
              sys.exit(1)
 
-    # def shutdown():
-    #     cmd = tomcatHome+"bin/shutdown.sh"
-    #     os.system(cmd)
-    #     pid=process()
-    #     while pid != []:
-    #         time.sleep(1)
-    #         pid=process()
-    #     print "[INFO] \033[33m tomcat is stopped \033[0m"
+    def shutdown(self):
+        cmd = self.tomcatHome+"bin/shutdown.sh"
+        os.system(cmd)
+        pid=self.process()
+        while pid != []:
+            time.sleep(1)
+            pid=self.process()
+        print "[INFO] \033[33m tomcat is stopped \033[0m"
 
-    # def startup():
-    #     cmd = tomcatHome+'bin/startup.sh'
-    #     os.system(cmd)
-    #     pid=process()
-    #     while pid == []:
-    #         time.sleep(1)
-    #         pid=process()
-    #     print "[INFO] \033[33m",warFilePath,"is deployed,pid:",pid,"\033[0m"
+    def startup(self):
+        cmd = self.tomcatHome+'bin/startup.sh'
+        os.system(cmd)
+        pid=self.process()
+        while pid == []:
+            time.sleep(1)
+            pid=self.process()
+        print "[INFO] \033[33m",self.warFilePath,"is deployed,pid:",pid,"\033[0m"
 
-    # def process():
-    #     try:
-    #         pid_cmd = "ps -ef|grep '" + tomcatHome + "'|grep java|grep -v grep|head -n 1|awk '{print $2}'"
-    #         pid = os.popen(pid_cmd).readlines()
-    #         return pid
-    #     except os.error,e:
-    #         sys.exit(1)
+    def process(self):
+        try:
+            pid_cmd = "ps -ef|grep '" + self.tomcatHome + "'|grep java|grep -v grep|head -n 1|awk '{print $2}'"
+            pid = os.popen(pid_cmd).readlines()
+            return pid
+        except os.error,e:
+            sys.exit(1)
 
     def releasefun(self):
 
@@ -112,48 +112,46 @@ class OnekeyRelease:
         f.close()
         print '[INFO] \033[33m unzip',self.warFilePath,'-d ',web_root_home,'success \033[0m'
 
-        try:
-            replace_cmd = replaceScript+' '+web_root_home
-            os.system(replace_cmd)
-            print '[INFO] \033[33m replace_conf success \033[0m'
-        except os.error,e:
-            print '\033[41m [ERROR] replace_conf failed! \033[0m'
-            sys.exit(1)
+        # try:
+        #     replace_cmd = replaceScript+' '+web_root_home
+        #     os.system(replace_cmd)
+        #     print '[INFO] \033[33m replace_conf success \033[0m'
+        # except os.error,e:
+        #     print '\033[41m [ERROR] replace_conf failed! \033[0m'
+        #     sys.exit(1)
 
-        shutdown()
-        replace_version_cmd="sed -i 's/"+version+"/"+new_version"/g'"+tomcat_home+"conf/Catalina/localhost/" + context_filename
-        startup()
+        self.shutdown()
+	replace_version_cmd="sed -i 's/"+version+"/"+new_version+"/g' "+self.tomcatHome+"conf/Catalina/localhost/" + context_filename
+        self.startup()
 
 
-# def main(argv = sys.argv):
-#     if len(sys.argv) != 5:
-#         print 'An incorrect number of parameters was passed'
-#         sys.exit(1)
-
-#     short_args = "hp:t:w:f:"
-#     long_args = ["help","warfilepath=","tomcathome=","webhome=","replaceScript="]
-#     try:
-#         opts,args = getopt.getopt(argv[1:],short_args,long_args)
-#     except:
-#         usage()
-#     for opt,value in opts:
-#         if opt in ('-h','--help'):
-#             usage()
-#         if opt in ('-p','--warfilepath'):
-#             warFilePath = value
-#         if opt in ('-t','--tomcathome'):
-#             tomcatHome = value
-#         if opt in ('-w','--webhome'):
-#             webHome = value
-#         if opt in ('-f','--replaceScript'):
-#             replaceScript = value
-#     prog = OnekeyRelease(warFilePath,tomcatHome,webHome,replaceScript)
+def main(argv = sys.argv):
+    short_args = "hp:t:w:f:"
+    long_args = ["help","warFilepPath=","tomcatHome=","webHome=","replaceScript="]
+    try:
+        opts,args = getopt.getopt(argv[1:],short_args,long_args)
+    except:
+        usage()
+    for opt,value in opts:
+        if opt in ('-h','--help'):
+            usage()
+        if opt in ('-p','--warfilepath'):
+            warFilePath = value
+        if opt in ('-t','--tomcathome'):
+            tomcatHome = value
+        if opt in ('-w','--webhome'):
+            webHome = value
+        if opt in ('-f','--replaceScript'):
+            replaceScript = value
+    prog = OnekeyRelease(warFilePath,tomcatHome,webHome)
+    prog.releasefun()
             
 if __name__ == '__main__':
+    main()
     #getoptfun()
-    warFilePath = "/usr/local/apache-tomcat-7.0.14/webapps/user-service.war"
-    tomcatHome = "/usr/local/apache-tomcat-7.0.14/"
-    webHome = "/home/yangjiao/version"
-    proc = OnekeyRelease(warFilePath,tomcatHome,webHome)
-    proc.releasefun()
+    # warFilePath = "/usr/local/apache-tomcat-7.0.14/webapps/user-service.war"
+    # tomcatHome = "/usr/local/apache-tomcat-7.0.14/"
+    # webHome = "/home/yangjiao/version"
+    # proc = OnekeyRelease(warFilePath,tomcatHome,webHome)
+    # proc.releasefun()
 
