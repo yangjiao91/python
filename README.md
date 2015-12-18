@@ -1,2 +1,2 @@
 # python
-learnPythonTheHardWay from learnpythonthehardway.org/book .
+learnPythonTheHardWay from "learnpythonthehardway.org/book" .
