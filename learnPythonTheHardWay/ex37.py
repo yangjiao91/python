@@ -2,30 +2,91 @@
 #Keywords
 # and	Logical and.	True and False == False
 # as	Part of the with-as statement.	with X as Y: pass
+with open("ex20.txt") as f:
+	print f.read()
+
 # assert	Assert (ensure) that something is true.	assert False, "Error!"
+assert True/False
+
 # break	Stop this loop right now.	while True: break
-# class	Define a class.	class Person(object)
 # continue	Don't process more of the loop, do it again.	while True: continue
+
+# class	Define a class.	class Person(object)
+class myClass():
+	def __init__(self,a):
+		self.a = a
+	def returnA(self):
+		return self.a
+x = myClass("hello")
+print x.returnA()
+
 # def	Define a function.	def X(): pass
 # del	Delete from dictionary.	del X[Y]
+a = ['a','b','c','d']
+print a
+del a[0]   #删除第0个元素
+print a
+del a[1:2]
+print a
+del a[:]  #清空a的内容
+print a
+del a
+print a
+
 # elif	Else if condition.	if: X; elif: Y; else: J
 # else	Else condition.	if: X; elif: Y; else: J
-# except	If an exception happens, do this.	except ValueError, e: print e
+# except	If an exception happens, do this.	except ValueError, e: print e  ,except(RuntimeError, TypeError, NameError)
+try:
+	x=int(raw_input())
+except ValueError:
+	print "Ops!"
+
 # exec	Run a string as Python.	exec 'print "hello"'
+
 # finally	Exceptions or not, finally do this no matter what.	finally: pass
 # for	Loop over a collection of things.	for X in Y: pass
 # from	Importing specific parts of a module.	import X from Y
 # global	Declare that you want a global variable.	global X
+a = 2
+def b():
+	global a    #函数内改变外部的变量
+	a = 0
+	a += 1
+	print a
+b()
+print a
+
 # if	If condition.	if: X; elif: Y; else: J
 # import	Import a module into this one to use.	import os
 # in	Part of for-loops. Also a test of X in Y.	for X in Y: pass also 1 in [1] == True
 # is	Like == to test equality.	1 is 1 == True
+            Python中的对象包含三要素：id、type、value
+            其中id用来唯一标识一个对象，type标识对象的类型，value是对象的值
+            is判断的是a对象是否就是b对象，是通过id来判断的
+            ==判断的是a对象的值是否和b对象的值相等，是通过value来判断的
+id(a) #取得a的id
+
 # lambda	Create a short anonymous function.	s = lambda y: y ** y; s(3)
+lambda只是一个表达式
+b = lambda x:x+2
+print b(3)
+
+b = lambda x:lambda y:x+y
+a=b(3)
+a(2)
+
+
 # not	Logical not.	not True == False
 # or	Logical or.	True or False == True
 # pass	This block is empty.	def empty(): pass
 # print	Print this string.	print 'this string'
 # raise	Raise an exception when things go wrong.	raise ValueError("No")
+try:
+	with open("ex23.txt") as f:
+		pass
+except:
+	raise IOError("open file error")
+
 # return	Exit the function with a return value.	def X(): return Y
 # try	Try this block, and if exception, go to except.	try: pass
 # while	While loop.	while X: pass
