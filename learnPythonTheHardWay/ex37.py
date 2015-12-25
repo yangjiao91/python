@@ -92,17 +92,82 @@ except:
 # while	While loop.	while X: pass
 # with	With an expression as a variable do.	with X as Y: pass
 # yield	Pause here and return to caller.	def X(): yield Y; X().next()
+            yield 的作用就是把一个函数变成一个 generator，
+            带有 yield 的函数不再是一个普通函数，Python 解释器会将其视为一个 generator，
+            调用 fab(5) 不会执行 fab 函数，而是返回一个 iterable 对象！
+            在 for 循环执行时，每次循环都会执行 fab 函数内部的代码，
+            执行到 yield b 时，fab 函数就返回一个迭代值，下次迭代时，代码从 yield b 的下一条语句继续执行，
+            而函数的本地变量看起来和上次中断执行前是完全一样的，于是函数继续执行，直到再次遇到 yield
+            generator function 中，如果没有 return，则默认执行至函数完毕，如果在执行过程中 return，则直接抛出 StopIteration 终止迭代。
+            raise StopIteration()
+# -*- coding:utf-8 -*-
+from inspect import isgeneratorfunction
+def fab(max):
+	n,a,b = 0,0,1
+	while n < max:
+		yield b
+		a, b = b, a+b
+		n = n + 1
+
+# 如何判断一个函数是否是一个特殊的 generator 函数？可以利用 isgeneratorfunction 判断
+# print isgeneratorfunction(fab)
+print fab(5)
+print fab(5).next()
+
+def fread_file(fpath):
+	BLOCK_SIZE = 1024
+	with open(fpath,'rb') as f:
+		while True:
+			block = f.read(BLOCK_SIZE)
+			if block :
+				yield block
+			else:
+				return
+
+print fread_file("../ex1.py").next()
+
+
 
 
 # Data Types
 # True	True boolean value.	True or False == True
 # False	False boolean value.	False and True == False
-# None	Represents "nothing" or "no value".	x = None
+# None	Represents "nothing" or "no value".	x = None，它只有一个值None，None  type
+type(None)  #<type 'NoneType'>
+
 # strings	Stores textual information.	x = "hello"
 # numbers	Stores integers.	i = 100
 # floats	Stores decimals.	i = 10.389
 # lists	Stores a list of things.	j = [1,2,3,4]
+Tuple 是不可变的 list
 # dicts	Stores a key=value mapping of things.	e = {'x': 1, 'y': 2}
+import copy
+d=dict()
+d={}
+d = {'name':"Jane","age":12,"weight":45}
+d2 = copy.deepcopy(d)
+d3 = copy.copy(d)
+print "d2=",d2,",d3=",d3
+print d.keys()
+print d.items()
+d["height"] = 160
+print d.pop("name")
+del(d["age"])
+
+print sorted(d.items(),key=lambda d:d[0])
+print sorted(d)
+
+for key in d.keys():
+	print d[key]
+for key,value in d.items():
+	print "dict[%s]="%key,value
+d.clear()
+print d
+
+L = ["1","2","tel"]
+print L.pop()
+print L
+
 
 # Escape Sequences
 # \\	Backslash
@@ -153,11 +218,34 @@ except:
 # [ ]	List brackets	[1,3,4]
 # { }	Dict curly braces	{'x': 5, 'y': 10}
 # @	At (decorators)	@classmethod
+# -*- coding:utf-8 -*-
+def f1(arg):
+    print "f1"
+    rl = arg()
+    print rl
+    return rl + "f1"
+
+@f1
+# 类似于f2=f1(f2())
+def f2(arg = ""):
+    print "f2"
+    return arg + "f2r"
+
+print "start"
+print f2
+
+result:
+f1
+f2
+f2r
+start
+f2rf1
+
 # ,	Comma	range(0, 10)
 # :	Colon	def X():
 # .	Dot	self.x = 10
 # =	Assign equal	x = 10
-# ;	semi-colon	print "hi"; print "there"
+# ;	semi-colon	print "hi"; print "there"    :换行，equal \n
 # +=	Add and assign	x = 1; x += 2
 # -=	Subtract and assign	x = 1; x -= 2
 # *=	Multiply and assign	x = 1; x *= 2

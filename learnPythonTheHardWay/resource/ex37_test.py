@@ -1,4 +1,1 @@
-def test():
-	if True:
-		yield 3
-print test()
+print 10%3
