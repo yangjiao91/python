@@ -16,6 +16,7 @@ def TestFunc1():
 def tearDown():
     print "function tearDown"
 
+#忽略这个测试case
 @nottest
 def TestFunc2():
     print "TestFunc2"
