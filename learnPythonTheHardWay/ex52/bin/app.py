@@ -1,6 +1,6 @@
 import web
 import sys
-sys.path.append('..')
+sys.path.append('E:\\yangjiao91\\python\\learnPythonTheHardWay\\ex52')
 from gothonweb import map
 
 urls = (
@@ -48,13 +48,14 @@ if __name__ == "__main__":
 
 
 
+# import web
+#
 # web.config.debug = False
-
+#
 # urls = (
 #     "/count", "count",
-#     "/reset","reset"
+#     "/reset", "reset"
 # )
-#
 # app = web.application(urls, locals())
 # store = web.session.DiskStore('sessions')
 # session = web.session.Session(app, store, initializer={'count': 0})
