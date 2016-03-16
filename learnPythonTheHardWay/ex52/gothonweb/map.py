@@ -13,8 +13,11 @@ class Room(object):
         self.paths.update(paths)
 
 central_corridor = Room("Central Corridor",
-"""The Gothons of Planet Percal #25 have invaded your ship and destroyed
-your entire crew.""")
+"""The Central Corridor room
+shoot!
+dodge!
+tell a joke
+""")
 
 laser_weapon_armory = Room("Laser Weapon Armory",
 """Lucky for you they made you learn Gothon insults in the academy.""")
@@ -22,7 +25,7 @@ laser_weapon_armory = Room("Laser Weapon Armory",
 the_bridge = Room("The Bridge",
 """The container clicks open and the seal breaks, letting gas out.""")
 
-escape_pod = Room("Escape Pod",
+escape_pod =  Room("Escape Pod",
 """ There's 5 pods, which one do you take?""")
 
 the_end_winner = Room("The End",""" You won!""")
@@ -39,6 +42,7 @@ the_bridge.add_paths({'throw the bomb': generic_death,'slowly place the bomb': e
 
 laser_weapon_armory.add_paths({'0132': the_bridge,'*': generic_death
 })
+
 
 central_corridor.add_paths({
     'shoot!': generic_death,

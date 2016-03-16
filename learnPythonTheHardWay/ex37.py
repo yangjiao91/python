@@ -111,8 +111,9 @@ def fab(max):
 
 # 如何判断一个函数是否是一个特殊的 generator 函数？可以利用 isgeneratorfunction 判断
 # print isgeneratorfunction(fab)
-print fab(5)
-print fab(5).next()
+t = fab(5)
+print t.next()
+print t.next()
 
 def fread_file(fpath):
 	BLOCK_SIZE = 1024
