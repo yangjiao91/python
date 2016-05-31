@@ -1,0 +1,13 @@
+!define COMMAND_PATTERN {python %m %p}
+!define TEST_RUNNER {/home/yangjiao/PyFIT-0.8a2/fit/FitServer.py}
+!path /home/yangjiao/script
+!| HelloFit |
+| description | num1 | num2 | result? |
+| add | 1 | 2 | 3 |
+
+!| ActionFixture |
+| start | AddTest | |
+| enter | firstPart | 1 |
+| enter | secondPart | 2 |
+| press | join |
+| check | together | 3 |
